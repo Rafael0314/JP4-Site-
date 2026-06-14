@@ -1,1 +1,696 @@
+/* ==========================================================================
+   1. RESET, VARIÁVEIS E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
 
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --vermelho-vibrante: #e61919;
+    --preto-asfalto: #121212;
+    --preto-preto: #000000;
+    --degrade-vermelho: linear-gradient(#e61919, #9e1010);
+    --branco-sujo: #f2f2f2;
+    --azul-detalhe: #00adef;
+    --branco-branco: #FFFFFF;
+}
+
+.background-preto-asfalto {
+    background-color: var(--preto-preto);
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 2%;
+}
+
+/* Fontes */
+.creepster-regular {
+    font-family: "Creepster", system-ui, cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.bebas-neue-regular {
+    font-family: 'Bebas Neue', sans-serif;
+    animation: fadeInUp 1.5s ease-out forwards;
+}
+
+/* ==========================================================================
+   2. NAVBAR (MENU SUPERIOR)
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 0;
+    background: rgba(0, 3, 10, 0.85);
+    backdrop-filter: blur(10px);
+    transition: transform 0.4s ease-in-out, background 0.3s;
+}
+
+.navbar.scrolled {
+    background: rgba(0, 0, 0, 0.95);
+    border-bottom: 2px solid var(--vermelho-vibrante);
+    padding: 10px 0;
+}
+
+.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.logo img {
+    height: 100px;
+    width: auto;
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2) drop-shadow(0 0 8px var(--azul-detalhe));
+}
+
+.logo:active {
+    transform: scale(0.95);
+}
+
+.ul {
+    display: flex;
+    align-items: center;
+}
+
+.ul li {
+    margin: 0 20px;
+}
+
+.ul li a {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--branco-sujo);
+    font-size: 20px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background: var(--vermelho-vibrante);
+    transition: 0.3s;
+}
+
+.ul li a:hover {
+    color: var(--vermelho-vibrante);
+}
+
+.ul li a:hover::after {
+    width: 100%;
+}
+
+/* ==========================================================================
+   3. BANNER PRINCIPAL E BOAS-VINDAS
+   ========================================================================== */
+.main-banner {
+    width: 100%;
+    margin-top: 140px;
+    position: relative;
+}
+
+.main-img {
+    width: 100%;
+    height: 70vh; /* Se adapta melhor a telas de notebooks e PCs */
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: 0.5s ease;
+}
+
+.main-img:hover img {
+    transform: scale(1.03);
+}
+
+.main-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+
+.overlay-button {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.col-2 h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--branco-sujo);
+    font-size: clamp(40px, 8vw, 110px); /* Responsivo automaticamente */
+    margin: 25px 0;
+    line-height: 1.1;
+    text-align: center;
+}
+
+/* ==========================================================================
+   4. CARROSSEL DE DESTAQUES
+   ========================================================================== */
+.carousel {
+    position: relative;
+    max-width: 1000px;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: #1a1a1a;
+}
+
+.image-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.image-container img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    min-width: 100%;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(230, 25, 25, 0.8);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.arrow:hover {
+    background: var(--vermelho-vibrante);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.left { left: 15px; }
+.right { right: 15px; }
+
+/* ==========================================================================
+   5. GRADE DE PRODUTOS E CARDS
+   ========================================================================== */
+.titulo-destaque h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    letter-spacing: 3px;
+    color: white;
+    position: relative;
+    line-height: 60px;
+    margin: 50px auto 40px;
+    text-align: center;
+}
+
+.titulo-destaque h2::after {
+    content: '';
+    background-color: #e61919;
+    width: 180px;
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.grid-produtos {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px 0 60px;
+}
+
+/* Card visível por padrão se você ainda não usa o script de rolagem ativa */
+.card-produto {
+    background: #111;
+    border-radius: 20px;
+    padding: 25px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-produto:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 60px rgba(230, 25, 25, 0.4);
+}
+
+.tag-produto {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--vermelho-vibrante);
+    color: white;
+    padding: 5px 15px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    z-index: 2;
+}
+
+.card-produto img {
+    width: 100%;
+    border-radius: 15px;
+    transition: transform 0.4s ease;
+}
+
+.card-produto h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    margin-top: 15px;
+    color: tan;
+    letter-spacing: 2px;
+}
+
+.classificacao {
+    color: gold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.container-preco {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+    justify-content: center;
+}
+
+.preco-antigo {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.preco-atual {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 28px;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.tag-desconto {
+    background-color: #000;
+    color: #fff;
+    padding: 2px 6px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+.pagamento-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+    margin: 10px 0;
+    color: chocolate;
+}
+
+.pix-detalhe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.pix-detalhe img {
+    width: 80px;
+    filter: brightness(0) invert(1);
+    margin-bottom: 5px;
+}
+
+.pix-detalhe span {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 1px;
+}
+
+.btn-comprar {
+    display: block;
+    width: 100%;
+    padding: 12px 30px;
+    background: var(--vermelho-vibrante);
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-comprar:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   6. SEÇÃO DE OFERTAS (BANNER BRANCO)
+   ========================================================================== */
+.ofertas {
+    background-color: #f4f7f6;
+    padding: 60px 0;
+    width: 100%;
+    border-radius: 50px;
+    margin-bottom: 40px;
+}
+
+.linha-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.col-imagem img {
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+.col-texto {
+    flex: 1;
+    max-width: 600px;
+    text-align: left;
+    padding: 20px;
+}
+
+.tag-exclusiva {
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.titulo-oferta {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 6vw, 75px);
+    line-height: 0.9;
+    margin: 10px 0;
+    color: #111;
+}
+
+.descricao-oferta {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.btn-comprar-oferta {
+    display: inline-block;
+    background-color: #3d0380;
+    color: white;
+    padding: 15px 45px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    transition: 0.3s;
+    animation: pulse 2s infinite;
+}
+
+.btn-comprar-oferta:hover {
+    background-color: var(--vermelho-vibrante);
+    color: white;
+}
+
+/* ==========================================================================
+   7. MODAL DE COMPRA
+   ========================================================================== */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 2000;
+    left: 0; 
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0,0,0,0.92);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5vh auto;
+    background: #0d0d0d;
+    width: 90%;
+    max-width: 1000px;
+    height: 80vh;
+    border: 1px solid #333;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.zoom-container {
+    flex: 1.2;
+    background: #000;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Evita que a foto vaze no efeito lupa */
+}
+
+.zoom-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.zoom-container:hover img {
+    transform: scale(1.5);
+}
+
+.modal-details {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #0d0d0d;
+}
+
+.modal-details h2 {
+    color: #ff0000;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.price-modal {
+    color: #00ff00;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.size-selection p {
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.size-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.size-btn {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+}
+
+.size-btn:hover, .size-btn.active {
+    background: #ff0000;
+    border-color: #ff0000;
+}
+
+.thumbnail-grid {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.thumb {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.thumb.active, .thumb:hover { 
+    border-color: var(--vermelho-vibrante); 
+}
+
+.btn-whatsapp {
+    display: block;
+    background: #25d366;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.03);
+    background: #128c7e;
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px; 
+    top: 15px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: var(--vermelho-vibrante);
+}
+
+/* ==========================================================================
+   8. RODAPÉ (FOOTER)
+   ========================================================================== */
+.footer-loja {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 50px 0 20px 0;
+    width: 100%;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-logo, .img-pix {
+    max-width: 80px;
+    margin-bottom: 10px;
+}
+
+.footer-loja hr {
+    border: 0;
+    border-top: 1px solid #222;
+    margin: 30px 0 20px;
+}
+
+.text-center { text-align: center; }
+.copyright { opacity: 0.6; font-size: 13px; }
+
+/* ==========================================================================
+   9. ANIMAÇÕES (KEYFRAMES)
+   ========================================================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(81, 2, 172, 0.5); }
+    70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(81, 2, 172, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(81, 2, 172, 0); }
+}
+
+/* ==========================================================================
+   10. RESPONSIVIDADE MOBILE (TELAS MENORES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .ul li { margin: 5px 10px; }
+    
+    .modal-content {
+        flex-direction: column;
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .zoom-container { height: 300px; width: 100%; }
+    .modal-details { padding: 20px; }
+    .main-img { height: 50vh; }
+}
