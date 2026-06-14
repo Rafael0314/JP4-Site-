@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <title>JP4_STREET</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Creepster&display=swap" rel="stylesheet">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        .arrow:hover {
+            background: var(--vermelho-vibrante);
+            scale: 1.1;
+        }
+
+        .left {
+            left: 15px;
+        }
+
+        .right {
+            right: 15px;
+        }
+    </style>
+</head>
+
+<body id="topo" class="background-preto-asfalto">
+
+    <header class="container">
+        <div class="navbar">
+            <div id="inicio_1" class="logo">
+                <a href="#topo"><img src="img/jp_fundo-removebg.png" alt="Logo JP4 STREET"></a>
+            </div>
+            <nav>
+                <ul class="ul">
+                    <li><a href="#topo">Início</a></li>
+                    <li><a href="#promocoes">Promoções</a></li>
+                    <li><a href="#camisas">Camisas</a></li>
+                    <li><a href="#lancamentos">Lançamentos</a></li>
+                    <li><a href="https://www.instagram.com/jp4street_" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                </ul>
+            </nav>
+        </div> 
+    </header>
+
+    <main>
+        <!-- BANNER PRINCIPAL -->
+        <section class="main-banner">
+            <div class="main-img">
+                <img src="img/Gemini_Generated_Image_y2ju9vy2ju9vy2ju.png" alt="Banner JP4">
+                <div class="overlay-button"></div>
+            </div>
+        </section>
+
+        <!-- TÍTULO DE BOAS-VINDAS -->
+        <section class="container linha">
+            <div class="col-2">
+                <h1 class="bebas-neue-regular">Escolha um novo estilo de vida!</h1>
+            </div>
+        </section>
+
+        <!-- CARROSSEL DE DESTAQUES -->
+        <section class="container">
+            <h2 style="color: white; font-family: 'Bebas Neue'; font-size: 40px; text-align: center; margin-bottom: 20px;">
+                Destaques da Coleção
+            </h2>
+
+            <div class="carousel">
+                <button class="arrow left" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="arrow right" onclick="moveSlide(1)">&#10095;</button>
+
+                <div class="image-container" id="slider">
+                    <img src="img/alice_costas_frente.png" alt="Alice Costas">
+                    <img src="img/jean_atraz_xeque_mate.jpeg" alt="jean roupa xeque mate">
+                    <img src="img/jean_de_frente_com_matheus_de_costas_preto_branco.jpeg" alt="jean e matheus roupa xeque mate ">
+                    <img src="img/matheus_xeque_mate_preto.jpeg" alt="Daniel Xeque">
+                    <img src="img/daniel_xeque.png" alt="Daniel Xeque">
+                </div>
+            </div>
+        </section>
+
+        <!-- GRADE DE PRODUTOS -->
+        <section id="camisas" class="titulo-destaque">
+            <h2 id="promocoes">Roupas em Destaque</h2>
+
+            <div id="lancamentos" class="grid-produtos">
+                <!-- PRODUTO 1: XEQUE MATE -->
+                <div class="card-produto">
+                    <span class="tag-produto">Lançamento</span>
+                    <img src="img/roupa_loja_xeque_mate.png" alt="Oversize Xeque Mate">
+                    <h4>OVERSIZE XEQUE MATE</h4>
+
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+
+                    <div class="container-preco">
+                        <span class="preco-antigo">R$139,99</span>
+                        <span class="preco-atual">R$99,99</span>
+                        <span class="tag-desconto">-25%</span>
+                    </div>
+
+                    <div class="pagamento-footer">
+                        <div class="pix-detalhe">
+                            <img src="img/pix.png" alt="Logo PIX">
+                            <p>DESCONTO VÁLIDO SOMENTE (frete não incluso)</p>
+                            <span>PIX ou 1x no CRÉDITO</span>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/5511991658593?text=Olá!%20Quero%20comprar%20a%20Oversize%20Xeque%20Mate"
+                        target="_blank" rel="noopener noreferrer" class="btn-comprar" style="text-decoration: none; display: block; text-align: center;">
+                        Comprar Agora
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SEÇÃO OFERTAS -->
+        <section class="ofertas">
+            <div class="container">
+                <div class="linha-flex">
+                    <div class="col-imagem">
+                        <img src="img/dani_hana.png" alt="Modelos JP4">
+                    </div>
+                    <div class="col-texto">
+                        <p class="tag-exclusiva">Produto Exclusivo da loja JP4 STREET</p>
+                        <h1 class="titulo-oferta">OVERSIZE LIMITED EDITION</h1>
+                        <p class="descricao-oferta">As melhores peças com o caimento perfeito para o seu estilo streetwear. Garanta já a sua unidade exclusiva.</p>
+                        <a href="#" class="btn-comprar-oferta">COMPRAR AGORA →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO REDES SOCIAIS -->
+        <section id="rede_sociais" class="container" style="text-align: center; padding: 60px 20px;">
+            <h2 style="color: white; font-family: 'Bebas Neue'; font-size: 35px; margin-bottom: 15px;">Siga a JP4 no Instagram</h2>
+            <p style="color: #bbb; font-size: 16px; margin-bottom: 25px;">Fique por dentro de todos os lançamentos, bastidores e promoções exclusivas.</p>
+            <a href="https://www.instagram.com/jp4street_" target="_blank" rel="noopener noreferrer" class="btn-comprar" style="text-decoration: none; display: inline-flex; align-items: center; gap: 10px; padding: 12px 30px;">
+                <ion-icon name="logo-instagram" style="font-size: 24px;"></ion-icon> @jp4street_
+            </a>
+        </section>
+
+        <!-- MODAL DE PRODUTO -->
+        <div id="product-modal" class="modal">
+            <span class="close-modal">&times;</span>
+            <div class="modal-content">
+                <div class="zoom-container">
+                    <img src="img/roupa_loja_xeque_mate.png" id="main-modal-img" alt="Produto">
+                </div>
+
+                <div class="modal-details">
+                    <h2 class="bebas-neue-regular">OVERSIZE XEQUE MATE</h2>
+                    <p class="price-modal">R$ 99,99</p> <!-- Ajustado para sincronizar com o card -->
+
+                    <div class="size-selection">
+                        <p>Selecione o Tamanho:</p>
+                        <div class="size-options">
+                            <button class="size-btn">P</button>
+                            <button class="size-btn">M</button>
+                            <button class="size-btn">G</button>
+                            <button class="size-btn">GG</button>
+                        </div>
+                    </div>
+
+                    <div class="thumbnail-grid">
+                        <img src="img/roupa_loja_xeque_mate.png" class="thumb active" onclick="changeModalImg(this.src)">
+                        <img src="img/alice_costas_frente.png" class="thumb" onclick="changeModalImg(this.src)">
+                        <img src="img/daniel_xeque.png" class="thumb" onclick="changeModalImg(this.src)">
+                    </div>
+
+                    <a href="https://wa.me/5511991658593?text=Olá!%20Tenho%20interesse%20na%20Oversize%20Xeque%20Mate"
+                        target="_blank" rel="noopener noreferrer" class="btn-whatsapp" id="wa-link">
+                        COMPRE AGORA (WHATSAPP) →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER DA LOJA -->
+    <footer class="footer-loja">
+        <div class="container">
+            <div class="linha footer-flex">
+                <div class="footer-box text-center">
+                    <img src="img/jp_fundo-removebg.png" alt="JP4 Street Logo" class="footer-logo">
+                    <p>JP4 Street - O melhor do estilo urbano.</p>
+                </div>
+                <div class="footer-box text-center">
+                    <h4>Formas de Pagamento</h4>
+                    <img src="img/pix.png" alt="Pagamento via Pix" class="img-pix">
+                    <p>Aceitamos Pix e Cartões</p>
+                </div>
+            </div>
+            <hr>
+            <div class="copyright text-center">
+                <p>&copy; 2026 JP4 Street. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
