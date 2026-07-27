@@ -1,112 +1,181 @@
-// 1. EFEITO DE ENTRADA DOS CARDS (Intersection Observer)
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
+document.addEventListener('DOMContentLoaded', () => {
+    // ESTADOS GERAIS
+    let isCouponApplied = false;
+    let selectedSize = "M";
+    let currentIndex = 0;
+
+    // ELEMENTOS DO DOM
+    const couponModal = document.getElementById('coupon-modal');
+    const couponInput = document.getElementById('coupon-input');
+    const couponBtn = document.querySelector('.btn-use-coupon');
+    const couponCloseBtn = document.querySelector('.coupon-close');
+    const couponMessage = document.getElementById('coupon-message');
+
+    const cardPrice = document.getElementById('card-price');
+    const modalPrice = document.getElementById('modal-price');
+    const cardTagDiscount = document.getElementById('card-tag-discount');
+
+    const linkWaModal = document.getElementById('wa-link');
+    const linkWaMain = document.getElementById('btn-comprar-main');
+
+    const productModal = document.getElementById("product-modal");
+    const mainModalImg = document.getElementById("main-modal-img");
+    const closeProductModalBtn = document.querySelector('.close-modal');
+
+    // -------------------------------------------------------------
+    // 1. LÓGICA DO WHATSAPP
+    // -------------------------------------------------------------
+    function updateWhatsAppLinks() {
+        let textMsg = `Olá! Tenho interesse na Oversize Xeque Mate no tamanho ${selectedSize}`;
+        
+        if (isCouponApplied) {
+            textMsg += `. estou usando o cupom JP4ARANHA`;
         }
-    });
-}, { threshold: 0.1 });
 
-document.querySelectorAll('.card-produto').forEach((card) => observer.observe(card));
+        const encodedText = encodeURIComponent(textMsg);
+        const fullUrl = `https://wa.me/5511991658593?text=${encodedText}`;
 
-
-// 2. ESCONDER/MOSTRAR NAVBAR AO SCROLL
-let lastScrollTop = 0;
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', function () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Se a posição atual for maior que a anterior, você está descendo
-    if (scrollTop > lastScrollTop && scrollTop > 100) {
-        navbar.classList.add('nav-hidden'); // Esconde
-    } else {
-        navbar.classList.remove('nav-hidden'); // Mostra
+        if (linkWaModal) linkWaModal.href = fullUrl;
+        if (linkWaMain) linkWaMain.href = fullUrl;
     }
 
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Atualiza a última posição
-}, false);
+    updateWhatsAppLinks();
 
+    // -------------------------------------------------------------
+    // 2. LÓGICA DO POPUP E VALIDAÇÃO DO CUPOM
+    // -------------------------------------------------------------
+    setTimeout(() => {
+        if (couponModal) couponModal.classList.add('active');
+    }, 500);
 
-// 3. CARROSSEL DE DESTAQUES
-let currentIndex = 0;
-window.moveSlide = function(direction) {
+    function closeCouponModal() {
+        if (couponModal) couponModal.classList.remove('active');
+    }
+
+    if (couponCloseBtn) {
+        couponCloseBtn.addEventListener('click', closeCouponModal);
+    }
+
+    function applyCoupon() {
+        if (!couponInput || !couponMessage) return;
+
+        const val = couponInput.value.trim();
+
+        if (val === 'JP4ARANHA') {
+            isCouponApplied = true;
+
+            if (cardPrice) cardPrice.innerText = 'R$ 110,39';
+            if (modalPrice) modalPrice.innerText = 'R$ 110,39';
+            if (cardTagDiscount) cardTagDiscount.innerText = '-31%';
+
+            couponMessage.style.color = '#28a745';
+            couponMessage.innerText = 'Cupom JP4ARANHA aplicado com sucesso!';
+
+            updateWhatsAppLinks();
+
+            setTimeout(closeCouponModal, 1200);
+        } else {
+            couponMessage.style.color = '#ff2a2a';
+            couponMessage.innerText = 'Cupom inválido! Digite exatamente em maiúsculas: JP4ARANHA';
+        }
+    }
+
+    if (couponBtn) {
+        couponBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            applyCoupon();
+        });
+    }
+
+    if (couponInput) {
+        couponInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                applyCoupon();
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. CARROSSEL DE IMAGENS
+    // -------------------------------------------------------------
     const slider = document.getElementById('slider');
-    if (!slider) return;
-    
-    const totalImages = slider.children.length;
-    currentIndex += direction;
+    const prevBtn = document.querySelector('.arrow.left');
+    const nextBtn = document.querySelector('.arrow.right');
 
-    if (currentIndex >= totalImages) currentIndex = 0;
-    if (currentIndex < 0) currentIndex = totalImages - 1;
+    function moveSlide(direction) {
+        if (!slider) return;
+        const totalImages = slider.children.length;
+        currentIndex += direction;
 
-    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
+        if (currentIndex >= totalImages) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = totalImages - 1;
 
-
-// 4. MUDANÇA DE ESTILO DA NAVBAR AO SCROLL
-window.addEventListener('scroll', function() {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
-});
 
+    if (prevBtn) prevBtn.addEventListener('click', () => moveSlide(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => moveSlide(1));
 
-// 5. MODAL DE PRODUTO
-const modal = document.getElementById("product-modal");
-const modalImg = document.getElementById("main-modal-img");
-
-// Abrir modal ao clicar na imagem do card
-document.querySelectorAll('.card-produto img').forEach(img => {
-    img.onclick = function() {
-        if (modal && modalImg) {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-        }
-    }
-});
-
-// Fechar modal
-const closeBtn = document.querySelector('.close-modal');
-if (closeBtn) {
-    closeBtn.onclick = () => {
-        if (modal) modal.style.display = "none";
-    }
-}
-
-// Lógica da Lupa (Seguir o Mouse)
-const container = document.querySelector('.zoom-container');
-if (container && modalImg) {
-    container.addEventListener('mousemove', (e) => {
-        modalImg.style.transformOrigin = `${e.offsetX}px ${e.offsetY}px`;
+    // -------------------------------------------------------------
+    // 4. MODAL DO PRODUTO & THUMBNAILS
+    // -------------------------------------------------------------
+    document.querySelectorAll('.card-produto img').forEach(img => {
+        img.addEventListener('click', function() {
+            if (productModal && mainModalImg) {
+                productModal.style.display = "block";
+                mainModalImg.src = this.src;
+            }
+        });
     });
-}
 
-// Trocar foto pelas miniaturas
-window.changeModalImg = function(src) {
-    if (modalImg) modalImg.src = src;
-    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-    if (event && event.target) {
-        event.target.classList.add('active');
+    if (closeProductModalBtn) {
+        closeProductModalBtn.addEventListener('click', () => {
+            if (productModal) productModal.style.display = "none";
+        });
     }
-}
 
+    // Troca de miniaturas no modal
+    document.querySelectorAll('.thumbnail-grid .thumb').forEach(thumb => {
+        thumb.addEventListener('click', function() {
+            if (mainModalImg) mainModalImg.src = this.src;
+            document.querySelectorAll('.thumbnail-grid .thumb').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 
-// 6. SELEÇÃO DE TAMANHO E ATUALIZAÇÃO DO LINK DO WHATSAPP
-document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        // Remove ativo de todos os botões e coloca no clicado
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        const tamanho = this.innerText;
-        const linkWa = document.getElementById('wa-link');
-        
-        if (linkWa) {
-            // Atualiza dinamicamente o link enviando o produto correto e o tamanho selecionado pelo cliente
-            linkWa.href = `https://wa.me/5511991658593?text=Olá!%20Tenho%20interesse%20na%20Oversize%20Xeque%20Mate%20no%20tamanho%20${tamanho}`;
+    // Seleção de tamanho do produto
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            selectedSize = this.innerText;
+            updateWhatsAppLinks();
+        });
+    });
+
+    // -------------------------------------------------------------
+    // 5. COMPORTAMENTO DA NAVBAR NO SCROLL
+    // -------------------------------------------------------------
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (navbar) {
+            if (scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
         }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
 });
