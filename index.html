@@ -13,24 +13,29 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    <style>
-        .arrow:hover {
-            background: var(--vermelho-vibrante);
-            scale: 1.1;
-        }
-
-        .left {
-            left: 15px;
-        }
-
-        .right {
-            right: 15px;
-        }
-    </style>
 </head>
 
 <body id="topo" class="background-preto-asfalto">
+
+    <!-- POPUP CUPOM DE DESCONTO STREETWEAR -->
+    <div id="coupon-modal" class="coupon-overlay">
+        <div class="coupon-card">
+            <button type="button" class="coupon-close">&times;</button>
+            
+            <div class="coupon-badge">OFERTA DE BOAS-VINDAS ⚡</div>
+            <h2 class="coupon-title">BEM-VINDO À <br><span class="highlight-street">JP4 STREET</span></h2>
+            
+            <p class="coupon-desc">
+                Digite o cupom especial para garantir <strong style="color: #ff2a2a; font-size: 1.2rem;">31% OFF</strong> na sua camiseta Xeque Mate!
+            </p>
+
+            <div class="coupon-input-wrapper">
+                <input type="text" id="coupon-input" placeholder="Digite o cupom aqui..." autocomplete="off">
+                <button type="button" class="btn-use-coupon">APLICAR CUPOM 🔥</button>
+            </div>
+            <p id="coupon-message" class="coupon-message"></p>
+        </div>
+    </div>
 
     <header class="container">
         <div class="navbar">
@@ -53,7 +58,7 @@
         <!-- BANNER PRINCIPAL -->
         <section class="main-banner">
             <div class="main-img">
-                <img src="img/Gemini_Generated_Image_y2ju9vy2ju9vy2ju.png" alt="Banner JP4">
+                <img src="img/Gemini_Generated_Image_y2ju9vy2ju9vy2ju.jpeg" alt="Banner JP4">
                 <div class="overlay-button"></div>
             </div>
         </section>
@@ -72,15 +77,16 @@
             </h2>
 
             <div class="carousel">
-                <button class="arrow left" onclick="moveSlide(-1)">&#10094;</button>
-                <button class="arrow right" onclick="moveSlide(1)">&#10095;</button>
+                <button class="arrow left">&#10094;</button>
+                <button class="arrow right">&#10095;</button>
 
                 <div class="image-container" id="slider">
                     <img src="img/alice_costas_frente.png" alt="Alice Costas">
                     <img src="img/jean_atraz_xeque_mate.jpeg" alt="jean roupa xeque mate">
                     <img src="img/jean_de_frente_com_matheus_de_costas_preto_branco.jpeg" alt="jean e matheus roupa xeque mate ">
                     <img src="img/matheus_xeque_mate_preto.jpeg" alt="Daniel Xeque">
-                    <img src="img/daniel_xeque.png" alt="Daniel Xeque">
+                    <img src="img/xeque_mate_black_att.jpg" alt="Daniel Xeque">
+                    <img src="img/xeque_mate_whit_att.jpg" alt="Daniel Xeque">
                 </div>
             </div>
         </section>
@@ -106,8 +112,8 @@
 
                     <div class="container-preco">
                         <span class="preco-antigo">R$159,99</span>
-                        <span class="preco-atual">R$119,99</span>
-                        <span class="tag-desconto">-25%</span>
+                        <span class="preco-atual" id="card-price">R$119,99</span>
+                        <span class="tag-desconto" id="card-tag-discount">-25%</span>
                     </div>
 
                     <div class="pagamento-footer">
@@ -118,7 +124,7 @@
                         </div>
                     </div>
 
-                    <a href="https://wa.me/5511991658593?text=Olá!%20Quero%20comprar%20a%20Oversize%20Xeque%20Mate"
+                    <a id="btn-comprar-main" href="https://wa.me/5511991658593?text=Olá!%20Quero%20comprar%20a%20Oversize%20Xeque%20Mate"
                         target="_blank" rel="noopener noreferrer" class="btn-comprar" style="text-decoration: none; display: block; text-align: center;">
                         Comprar Agora
                     </a>
@@ -157,56 +163,40 @@
             <span class="close-modal">&times;</span>
             <div class="modal-content">
                 <div class="zoom-container">
-                    <img src="img/roupa_loja_xeque_mate.png" id="main-modal-img" alt="Produto">
+                    <img src="img/xeque_mate_whit_att.jpg" id="main-modal-img" alt="Produto">
                 </div>
 
                 <div class="modal-details">
                     <h2 class="bebas-neue-regular">OVERSIZE XEQUE MATE</h2>
-                    <p class="price-modal">R$ 119,99</p> <!-- Ajustado para sincronizar com o card -->
+                    <p class="price-modal" id="modal-price">R$ 119,99</p>
 
                     <div class="size-selection">
                         <p>Selecione o Tamanho:</p>
                         <div class="size-options">
                             <button class="size-btn">P</button>
-                            <button class="size-btn">M</button>
+                            <button class="size-btn active">M</button>
                             <button class="size-btn">G</button>
                             <button class="size-btn">GG</button>
                         </div>
                     </div>
 
                     <div class="thumbnail-grid">
-                        <img src="img/roupa_loja_xeque_mate.png" class="thumb active" onclick="changeModalImg(this.src)">
-                        <img src="img/alice_costas_frente.png" class="thumb" onclick="changeModalImg(this.src)">
-                        <img src="img/daniel_xeque.png" class="thumb" onclick="changeModalImg(this.src)">
+                        <img src="img/roupa_loja_xeque_mate.png" class="thumb active">
+                        <img src="img/xeque_mate_black_att.jpg" class="thumb">
+                        <img src="img/xeque_mate_whit_att.jpg" class="thumb">
                     </div>
 
-                    <a href="https://wa.me/5511991658593?text=Olá!%20Tenho%20interesse%20na%20Oversize%20Xeque%20Mate"
-                        target="_blank" rel="noopener noreferrer" class="btn-whatsapp" id="wa-link">
-                        COMPRE AGORA (WHATSAPP) →
+                    <a id="wa-link" href="https://wa.me/5511991658593?text=Olá!%20Tenho%20interesse%20na%20Oversize%20Xeque%20Mate" target="_blank" class="btn-whatsapp">
+                        COMPRAR VIA WHATSAPP
                     </a>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- FOOTER DA LOJA -->
     <footer class="footer-loja">
-        <div class="container">
-            <div class="linha footer-flex">
-                <div class="footer-box text-center">
-                    <img src="img/jp_fundo-removebg.png" alt="JP4 Street Logo" class="footer-logo">
-                    <p>JP4 Street - O melhor do estilo urbano.</p>
-                </div>
-                <div class="footer-box text-center">
-                    <h4>Formas de Pagamento</h4>
-                    <img src="img/pix.png" alt="Pagamento via Pix" class="img-pix">
-                    <p>Aceitamos Pix e Cartões</p>
-                </div>
-            </div>
-            <hr>
-            <div class="copyright text-center">
-                <p>&copy; 2026 JP4 Street. Todos os direitos reservados.</p>
-            </div>
+        <div class="container text-center">
+            <p class="copyright">&copy; JP4 STREET. Todos os direitos reservados.</p>
         </div>
     </footer>
 
