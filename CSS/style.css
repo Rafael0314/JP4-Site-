@@ -4,6 +4,7 @@
 * {
     margin: 0;
     padding: 0;
+    
     box-sizing: border-box;
     text-decoration: none;
     list-style: none;
@@ -14,17 +15,27 @@ html {
 }
 
 :root {
-    --vermelho-vibrante: #e61919;
+    --vermelho-vibrante: #ff2a2a;
+    --vermelho-escuro: #e02222;
     --preto-asfalto: #121212;
-    --preto-preto: #000000;
-    --degrade-vermelho: linear-gradient(#e61919, #9e1010);
+    --preto-card: #111111;
+    --preto-absoluto: #000000;
+    --degrade-vermelho: linear-gradient(135deg, #ff2a2a, #9e1010);
     --branco-sujo: #f2f2f2;
+    --branco-puro: #ffffff;
     --azul-detalhe: #00adef;
-    --branco-branco: #FFFFFF;
+    --cinza-texto: #cccccc;
+}
+
+body {
+    background-color: var(--preto-absoluto);
+    color: var(--branco-sujo);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
 }
 
 .background-preto-asfalto {
-    background-color: var(--preto-preto);
+    background-color: var(--preto-asfalto);
 }
 
 .container {
@@ -45,8 +56,156 @@ html {
     animation: fadeInUp 1.5s ease-out forwards;
 }
 
+/* ==========================================
+   2. ESTILOS DO POPUP DE CUPOM - JP4 STREET
+   ========================================== */
+.coupon-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.coupon-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.coupon-card {
+    background: var(--preto-card);
+    border: 2px solid var(--vermelho-vibrante);
+    border-radius: 12px;
+    padding: 35px 25px 30px;
+    width: 90%;
+    max-width: 440px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(255, 42, 42, 0.35);
+    transform: scale(0.8) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.coupon-overlay.active .coupon-card {
+    transform: scale(1) translateY(0);
+}
+
+.coupon-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.coupon-close:hover {
+    color: var(--vermelho-vibrante);
+    transform: scale(1.2);
+}
+
+.coupon-badge {
+    display: inline-block;
+    background: var(--vermelho-vibrante);
+    color: var(--branco-puro);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.coupon-title {
+    color: var(--branco-puro);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.highlight-street {
+    color: var(--vermelho-vibrante);
+    text-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
+}
+
+.coupon-desc {
+    color: var(--cinza-texto);
+    font-size: 15px;
+    margin-bottom: 22px;
+    line-height: 1.4;
+}
+
+.coupon-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.coupon-input-wrapper input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--vermelho-vibrante);
+    background: #1a1a1a;
+    color: var(--branco-puro);
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+}
+
+.coupon-input-wrapper input::placeholder {
+    font-family: sans-serif;
+    letter-spacing: 0;
+    font-size: 14px;
+    color: #888;
+}
+
+.btn-use-coupon {
+    width: 100%;
+    background: var(--vermelho-vibrante);
+    color: var(--branco-puro);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-use-coupon:hover {
+    background: var(--vermelho-escuro);
+    transform: translateY(-2px);
+}
+
+.coupon-message {
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+    min-height: 20px;
+}
+
 /* ==========================================================================
-   2. NAVBAR (MENU SUPERIOR)
+   3. NAVBAR (MENU SUPERIOR)
    ========================================================================== */
 .navbar {
     position: fixed;
@@ -60,7 +219,7 @@ html {
     padding: 20px 0;
     background: rgba(0, 3, 10, 0.85);
     backdrop-filter: blur(10px);
-    transition: transform 0.4s ease-in-out, background 0.3s;
+    transition: transform 0.4s ease-in-out, background 0.3s, padding 0.3s;
 }
 
 .navbar.scrolled {
@@ -89,16 +248,17 @@ html {
     transform: scale(0.95);
 }
 
-.ul {
+/* Suporte para <ul> direto ou classe .ul */
+.navbar ul, .ul {
     display: flex;
     align-items: center;
 }
 
-.ul li {
+.navbar ul li, .ul li {
     margin: 0 20px;
 }
 
-.ul li a {
+.navbar ul li a, .ul li a {
     font-family: 'Bebas Neue', sans-serif;
     color: var(--branco-sujo);
     font-size: 20px;
@@ -106,7 +266,7 @@ html {
     transition: 0.3s;
 }
 
-.ul li a::after {
+.navbar ul li a::after, .ul li a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -117,16 +277,16 @@ html {
     transition: 0.3s;
 }
 
-.ul li a:hover {
+.navbar ul li a:hover, .ul li a:hover {
     color: var(--vermelho-vibrante);
 }
 
-.ul li a:hover::after {
+.navbar ul li a:hover::after, .ul li a:hover::after {
     width: 100%;
 }
 
 /* ==========================================================================
-   3. BANNER PRINCIPAL E BOAS-VINDAS
+   4. BANNER PRINCIPAL E BOAS-VINDAS
    ========================================================================== */
 .main-banner {
     width: 100%;
@@ -136,7 +296,7 @@ html {
 
 .main-img {
     width: 100%;
-    height: 70vh; /* Se adapta melhor a telas de notebooks e PCs */
+    height: 70vh;
     min-height: 500px;
     position: relative;
     overflow: hidden;
@@ -147,7 +307,7 @@ html {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: 0.5s ease;
+    transition: transform 0.5s ease;
 }
 
 .main-img:hover img {
@@ -158,7 +318,7 @@ html {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 
 .overlay-button {
@@ -172,14 +332,14 @@ html {
 .col-2 h1 {
     font-family: 'Bebas Neue', sans-serif;
     color: var(--branco-sujo);
-    font-size: clamp(40px, 8vw, 110px); /* Responsivo automaticamente */
+    font-size: clamp(40px, 8vw, 110px);
     margin: 25px 0;
     line-height: 1.1;
     text-align: center;
 }
 
 /* ==========================================================================
-   4. CARROSSEL DE DESTAQUES
+   5. CARROSSEL DE DESTAQUES
    ========================================================================== */
 .carousel {
     position: relative;
@@ -208,8 +368,8 @@ html {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(230, 25, 25, 0.8);
-    color: white;
+    background: rgba(255, 42, 42, 0.8);
+    color: var(--branco-puro);
     border: none;
     padding: 15px;
     cursor: pointer;
@@ -228,13 +388,13 @@ html {
 .right { right: 15px; }
 
 /* ==========================================================================
-   5. GRADE DE PRODUTOS E CARDS
+   6. GRADE DE PRODUTOS E CARDS
    ========================================================================== */
 .titulo-destaque h2 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 40px;
     letter-spacing: 3px;
-    color: white;
+    color: var(--branco-puro);
     position: relative;
     line-height: 60px;
     margin: 50px auto 40px;
@@ -243,7 +403,7 @@ html {
 
 .titulo-destaque h2::after {
     content: '';
-    background-color: #e61919;
+    background-color: var(--vermelho-vibrante);
     width: 180px;
     height: 5px;
     border-radius: 5px;
@@ -262,9 +422,8 @@ html {
     padding: 20px 0 60px;
 }
 
-/* Card visível por padrão se você ainda não usa o script de rolagem ativa */
 .card-produto {
-    background: #111;
+    background: var(--preto-card);
     border-radius: 20px;
     padding: 25px;
     width: 300px;
@@ -277,7 +436,7 @@ html {
 
 .card-produto:hover {
     transform: translateY(-12px);
-    box-shadow: 0 30px 60px rgba(230, 25, 25, 0.4);
+    box-shadow: 0 20px 40px rgba(255, 42, 42, 0.25);
 }
 
 .tag-produto {
@@ -285,7 +444,7 @@ html {
     top: 15px;
     left: 15px;
     background: var(--vermelho-vibrante);
-    color: white;
+    color: var(--branco-puro);
     padding: 5px 15px;
     font-size: 12px;
     border-radius: 20px;
@@ -298,13 +457,14 @@ html {
     width: 100%;
     border-radius: 15px;
     transition: transform 0.4s ease;
+    cursor: pointer;
 }
 
 .card-produto h4 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 24px;
     margin-top: 15px;
-    color: tan;
+    color: #d2b48c;
     letter-spacing: 2px;
 }
 
@@ -336,8 +496,8 @@ html {
 }
 
 .tag-desconto {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--preto-absoluto);
+    color: var(--branco-puro);
     padding: 2px 6px;
     font-size: 14px;
     font-weight: bold;
@@ -349,7 +509,7 @@ html {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 10px;
     margin: 10px 0;
-    color: chocolate;
+    color: #d2691e;
 }
 
 .pix-detalhe {
@@ -376,7 +536,7 @@ html {
     width: 100%;
     padding: 12px 30px;
     background: var(--vermelho-vibrante);
-    color: white;
+    color: var(--branco-puro);
     font-family: 'Bebas Neue', sans-serif;
     font-size: 18px;
     font-weight: bold;
@@ -387,19 +547,19 @@ html {
 }
 
 .btn-comprar:hover {
-    background: white;
-    color: black;
+    background: var(--branco-puro);
+    color: var(--preto-absoluto);
     transform: scale(1.05);
 }
 
 /* ==========================================================================
-   6. SEÇÃO DE OFERTAS (BANNER BRANCO)
+   7. SEÇÃO DE OFERTAS (BANNER CLARO)
    ========================================================================== */
 .ofertas {
     background-color: #f4f7f6;
     padding: 60px 0;
     width: 100%;
-    border-radius: 50px;
+    border-radius: 30px;
     margin-bottom: 40px;
 }
 
@@ -449,7 +609,7 @@ html {
 .btn-comprar-oferta {
     display: inline-block;
     background-color: #3d0380;
-    color: white;
+    color: var(--branco-puro);
     padding: 15px 45px;
     border-radius: 50px;
     text-decoration: none;
@@ -461,11 +621,11 @@ html {
 
 .btn-comprar-oferta:hover {
     background-color: var(--vermelho-vibrante);
-    color: white;
+    color: var(--branco-puro);
 }
 
 /* ==========================================================================
-   7. MODAL DE COMPRA
+   8. MODAL DE COMPRA
    ========================================================================== */
 .modal {
     display: none; 
@@ -487,21 +647,23 @@ html {
     background: #0d0d0d;
     width: 90%;
     max-width: 1000px;
-    height: 80vh;
+    max-height: 90vh;
     border: 1px solid #333;
     border-radius: 15px;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
 }
 
 .zoom-container {
     flex: 1.2;
-    background: #000;
+    background: var(--preto-absoluto);
     height: 100%;
+    min-height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Evita que a foto vaze no efeito lupa */
+    overflow: hidden;
+    cursor: zoom-in;
 }
 
 .zoom-container img {
@@ -525,13 +687,14 @@ html {
 }
 
 .modal-details h2 {
-    color: #ff0000;
+    color: var(--vermelho-vibrante);
     font-size: 2.5rem;
+    font-family: 'Bebas Neue', sans-serif;
     margin-bottom: 10px;
 }
 
 .price-modal {
-    color: #00ff00;
+    color: #28a745;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
@@ -551,8 +714,8 @@ html {
 
 .size-btn {
     background: transparent;
-    border: 1px solid #fff;
-    color: #fff;
+    border: 1px solid var(--branco-puro);
+    color: var(--branco-puro);
     padding: 8px 18px;
     cursor: pointer;
     transition: 0.3s;
@@ -561,8 +724,8 @@ html {
 }
 
 .size-btn:hover, .size-btn.active {
-    background: #ff0000;
-    border-color: #ff0000;
+    background: var(--vermelho-vibrante);
+    border-color: var(--vermelho-vibrante);
 }
 
 .thumbnail-grid {
@@ -588,7 +751,7 @@ html {
 .btn-whatsapp {
     display: block;
     background: #25d366;
-    color: white;
+    color: var(--branco-puro);
     text-align: center;
     padding: 15px;
     font-weight: bold;
@@ -606,7 +769,7 @@ html {
     position: absolute;
     right: 25px; 
     top: 15px;
-    color: white;
+    color: var(--branco-puro);
     font-size: 40px;
     cursor: pointer;
     z-index: 10;
@@ -618,39 +781,20 @@ html {
 }
 
 /* ==========================================================================
-   8. RODAPÉ (FOOTER)
+   9. RODAPÉ (FOOTER)
    ========================================================================== */
 .footer-loja {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--preto-absoluto);
+    color: var(--branco-puro);
     padding: 50px 0 20px 0;
     width: 100%;
-}
-
-.footer-flex {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-.footer-logo, .img-pix {
-    max-width: 80px;
-    margin-bottom: 10px;
-}
-
-.footer-loja hr {
-    border: 0;
-    border-top: 1px solid #222;
-    margin: 30px 0 20px;
 }
 
 .text-center { text-align: center; }
 .copyright { opacity: 0.6; font-size: 13px; }
 
 /* ==========================================================================
-   9. ANIMAÇÕES (KEYFRAMES)
+   10. ANIMAÇÕES (KEYFRAMES)
    ========================================================================== */
 @keyframes fadeInUp {
     from {
@@ -664,33 +808,51 @@ html {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(81, 2, 172, 0.5); }
-    70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(81, 2, 172, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(81, 2, 172, 0); }
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(61, 3, 128, 0.5); }
+    70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(61, 3, 128, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(61, 3, 128, 0); }
 }
 
 /* ==========================================================================
-   10. RESPONSIVIDADE MOBILE (TELAS MENORES)
+   11. RESPONSIVIDADE MOBILE
    ========================================================================== */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
         padding: 15px;
     }
-    .ul {
+    
+    .navbar ul, .ul {
         margin-top: 15px;
         flex-wrap: wrap;
         justify-content: center;
     }
-    .ul li { margin: 5px 10px; }
+    
+    .navbar ul li, .ul li { 
+        margin: 5px 10px; 
+    }
+    
+    .main-banner {
+        margin-top: 180px;
+    }
+    
+    .main-img { 
+        height: 50vh; 
+        min-height: 350px;
+    }
     
     .modal-content {
         flex-direction: column;
         height: auto;
         max-height: 90vh;
-        overflow-y: auto;
     }
-    .zoom-container { height: 300px; width: 100%; }
-    .modal-details { padding: 20px; }
-    .main-img { height: 50vh; }
+    
+    .zoom-container { 
+        height: 250px; 
+        width: 100%; 
+    }
+    
+    .modal-details { 
+        padding: 20px; 
+    }
 }
